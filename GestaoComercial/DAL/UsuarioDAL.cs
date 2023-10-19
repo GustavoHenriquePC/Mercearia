@@ -1,6 +1,7 @@
 ﻿
 
 using Models;
+using System.Data.SqlClient;
 
 namespace DAL
 {
@@ -8,7 +9,16 @@ namespace DAL
     {
         public void Inserir(Usuario _ususario)
         {
+            try
+            {
+                SqlConnection cn = new SqlConnection();
+                SqlCommand cmd = cn.CreateCommand();
+            }
+            catch (Exception ex)
+            {
 
+                throw new Exception("Ocorreu um erro ao tentar inserir um Usuário no Banco de Dados", ex);
+            }
         }
         public void Alterar(Usuario _usuario)
         {
