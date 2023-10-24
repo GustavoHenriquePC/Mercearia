@@ -113,7 +113,7 @@ namespace DAL
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"SELECT FROM Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario";
+                cmd.CommandText = @"SELECT Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario";
 
                 cmd.CommandType = System.Data.CommandType.Text;
 

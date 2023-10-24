@@ -11,5 +11,13 @@ namespace UIWinFormsApp
         {
 
         }
+
+        private void usuárioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (FormBuscarUsuario frm = new FormBuscarUsuario())
+            {
+                frm.ShowDialog();
+            }
+        }
     }
 }
