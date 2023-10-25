@@ -2,6 +2,7 @@
 
 using DAL;
 using Models;
+using System.Security.Cryptography;
 
 namespace BLL
 {
@@ -29,5 +30,10 @@ namespace BLL
         {
             return new ProdutoDAL().BuscarPorId(_id);
         }
+        public Produto BuscarPorCodBarras(string _CodBarras)
+        {
+            return new ProdutoDAL().BuscarPorCodBarras(_CodBarras);
+        }
+
     }
 }

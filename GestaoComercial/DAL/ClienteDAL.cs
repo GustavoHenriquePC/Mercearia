@@ -173,7 +173,87 @@ namespace DAL
                 cn.Close();
             }
         }
+        public List<Cliente> BuscarPorNome(string _nome)
+        {
+            List<Cliente> clienteLista = new List<Cliente>();
+            Cliente cliente;
+            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
 
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"SELECT Id, Nome, Telefone
+                                    FROM CLIENTE
+                                    WHERE Nome LIKE @Nome";
+
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.Parameters.AddWithValue(@"Nome", "%" + _nome + "%");
+
+                cn.Open();
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        cliente = new Cliente();
+                        cliente.Id = (int)rd["Id"];
+                        cliente.Nome = rd["Nome"].ToString();
+                        cliente.Telefone = rd["Telefone"].ToString();
+                        clienteLista.Add(cliente);
+                    }
+                }
+
+                return clienteLista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar um cliente por nome no banco de dados.", ex);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+        public Cliente BuscarPorNomeUsuario(string _nomeUsuario)
+        {
+            Cliente cliente;
+
+            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"SELECT  Id, Nome, Telefone
+                                    FROM CLIENTE
+                                    WHERE NomeUsuario = @NomeUsuario";
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@NomeUsuario", _nomeUsuario);
+
+
+                cn.Open();
+
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    cliente = new Cliente();
+                    while (rd.Read())
+                    {
+                        cliente.Id = (int)rd["Id"];
+                        cliente.Nome = rd["Nome"].ToString();
+                        cliente.Telefone = rd["Telefone"].ToString();
+                    }
+                }
+
+                return cliente;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar um nome de cliente no banco de dados.", ex);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
 
     }
 }
