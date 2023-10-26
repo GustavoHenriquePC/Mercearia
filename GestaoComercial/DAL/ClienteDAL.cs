@@ -10,7 +10,7 @@ namespace DAL
     {
         public void Inserir(Cliente _cliente)
         {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -38,7 +38,7 @@ namespace DAL
         }
         public void Alterar(Cliente _cliente)
         {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -48,7 +48,7 @@ namespace DAL
 
                 cmd.CommandType = System.Data.CommandType.Text;
 
-                cmd.Parameters.AddWithValue("@Id", _cliente.Nome);
+                cmd.Parameters.AddWithValue("@Id", _cliente.Id);
                 cmd.Parameters.AddWithValue("@Nome", _cliente.Nome);
                 cmd.Parameters.AddWithValue("@Telefone", _cliente.Telefone);
 
@@ -70,7 +70,7 @@ namespace DAL
         }
         public void Excluir(int _id)
         {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -102,12 +102,12 @@ namespace DAL
             List<Cliente> clienteList = new List<Cliente>();
             Cliente cliente;
 
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"SELECT FROM Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario";
+                cmd.CommandText = @"SELECT FROM Id, Nome, Telefone FROM CLIENTE";
 
                 cmd.CommandType = System.Data.CommandType.Text;
 
@@ -116,35 +116,42 @@ namespace DAL
                 {
                     while (rd.Read())
                     {
-                        cliente = new Cliente();
-                        cliente.Id = (int)rd["Id"];
-                        cliente.Nome = rd["Nome"].ToString();
-                        cliente.Telefone = rd["Telefone"].ToString();
-                        
+                        cliente = PreencherObjeto(rd);
+                        clienteList.Add(cliente);
                     }
                 }
                 return clienteList;
             }
             catch (Exception ex)
             {
-
-                throw new Exception("Ocorreu um erro ao tentar Buscar o Usuário no Banco de Dados");
+                throw new Exception("Ocorreu um erro ao tentar Buscar o Usuário no Banco de Dados",ex);
             }
             finally
             {
                 cn.Close();
             }     
         }
+
+        private static Cliente PreencherObjeto(SqlDataReader rd)
+        {
+            Cliente cliente = new Cliente();
+            cliente.Id = (int)rd["Id"];
+            cliente.Nome = rd["Nome"].ToString();
+            cliente.Telefone = rd["Telefone"].ToString();
+            
+            return cliente;
+        }
+
         public Cliente BuscarPorId(int _id)
         {
             Cliente cliente;
 
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"SELECT FROM Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario WHERE Id = @Id";
+                cmd.CommandText = @"SELECT Id, Nome, Telefone FROM Cliente WHERE Id = @Id";
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 cmd.Parameters.AddWithValue(@"Id", _id);
@@ -177,7 +184,7 @@ namespace DAL
         {
             List<Cliente> clienteLista = new List<Cliente>();
             Cliente cliente;
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
             try
             {
@@ -213,21 +220,21 @@ namespace DAL
                 cn.Close();
             }
         }
-        public Cliente BuscarPorNomeUsuario(string _nomeUsuario)
+        public Cliente BuscarPorNomeUsuario(string _nomeCliente)
         {
             Cliente cliente;
 
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = @"SELECT  Id, Nome, Telefone
                                     FROM CLIENTE
-                                    WHERE NomeUsuario = @NomeUsuario";
+                                    WHERE NomeCliente = @NomeCliente";
                 cmd.CommandType = System.Data.CommandType.Text;
 
-                cmd.Parameters.AddWithValue("@NomeUsuario", _nomeUsuario);
+                cmd.Parameters.AddWithValue("@NomeCliente", _nomeCliente);
 
 
                 cn.Open();

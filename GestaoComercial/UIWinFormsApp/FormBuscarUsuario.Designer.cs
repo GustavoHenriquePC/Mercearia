@@ -54,6 +54,7 @@
             this.textBoxBuscarPor.Name = "textBoxBuscarPor";
             this.textBoxBuscarPor.Size = new System.Drawing.Size(416, 27);
             this.textBoxBuscarPor.TabIndex = 0;
+            this.textBoxBuscarPor.TextChanged += new System.EventHandler(this.textBoxBuscarPor_TextChanged);
             // 
             // buttonBuscar
             // 
@@ -73,6 +74,7 @@
             this.label1.Size = new System.Drawing.Size(79, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Buscar por";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -84,6 +86,7 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Buscar Usuário";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // buttonAlterar
             // 
@@ -186,6 +189,7 @@
             // bindingSourceUsuario
             // 
             this.bindingSourceUsuario.DataSource = typeof(Models.Usuario);
+            this.bindingSourceUsuario.CurrentChanged += new System.EventHandler(this.bindingSourceUsuario_CurrentChanged);
             // 
             // comboBoxBuscarPor
             // 
@@ -198,6 +202,7 @@
             this.comboBoxBuscarPor.Name = "comboBoxBuscarPor";
             this.comboBoxBuscarPor.Size = new System.Drawing.Size(151, 28);
             this.comboBoxBuscarPor.TabIndex = 5;
+            this.comboBoxBuscarPor.SelectedIndexChanged += new System.EventHandler(this.comboBoxBuscarPor_SelectedIndexChanged);
             // 
             // FormBuscarUsuario
             // 

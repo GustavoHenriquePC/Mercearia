@@ -2,6 +2,7 @@
 
 using DAL;
 using Models;
+using System.Security.Cryptography;
 
 namespace BLL
 {
@@ -29,5 +30,11 @@ namespace BLL
         {
             return new ClienteDAL().BuscarPorId(_id);
         }
+
+        public List<Cliente> BuscarPorNome(string _nome)
+        {
+            return new ClienteDAL().BuscarPorNome(_nome);
+        }
+
     }
 }

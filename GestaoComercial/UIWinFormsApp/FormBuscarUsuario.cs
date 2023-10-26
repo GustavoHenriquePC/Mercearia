@@ -47,5 +47,30 @@ namespace UIWinFormsApp
         {
 
         }
+
+        private void comboBoxBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxBuscarPor_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bindingSourceUsuario_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
