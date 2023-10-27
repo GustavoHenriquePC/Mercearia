@@ -72,5 +72,13 @@ namespace UIWinFormsApp
         {
 
         }
+
+        private void buttonInserir_Click(object sender, EventArgs e)
+        {
+            using (FormCadastrarUsuario frm = new FormCadastrarUsuario())
+            {
+                frm.ShowDialog();
+            }
+        }
     }
 }

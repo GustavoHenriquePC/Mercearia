@@ -176,7 +176,7 @@
             this.comboBoxBuscarPor.FormattingEnabled = true;
             this.comboBoxBuscarPor.Items.AddRange(new object[] {
             "Nome",
-            "iD",
+            "Id",
             "Todos"});
             this.comboBoxBuscarPor.Location = new System.Drawing.Point(19, 133);
             this.comboBoxBuscarPor.Name = "comboBoxBuscarPor";

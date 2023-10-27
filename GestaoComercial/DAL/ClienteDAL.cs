@@ -107,7 +107,7 @@ namespace DAL
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"SELECT FROM Id, Nome, Telefone FROM CLIENTE";
+                cmd.CommandText = @"SELECT Id, Nome, Telefone FROM CLIENTE";
 
                 cmd.CommandType = System.Data.CommandType.Text;
 
