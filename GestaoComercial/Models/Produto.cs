@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Models
+﻿namespace Models
 {
     public class Produto
     {
@@ -12,6 +6,6 @@ namespace Models
         public string Nome { get; set; }
         public double Preco { get; set; }
         public double Estoque { get; set; }
-        public string CodBarras { get; set; }
+        public string CodigoDeBarras { get; set; }
     }
 }

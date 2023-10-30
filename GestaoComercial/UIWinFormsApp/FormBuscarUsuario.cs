@@ -1,13 +1,5 @@
 ﻿using BLL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Models;
 
 namespace UIWinFormsApp
 {
@@ -18,7 +10,7 @@ namespace UIWinFormsApp
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonBuscar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -34,18 +26,38 @@ namespace UIWinFormsApp
                         bindingSourceUsuario.DataSource = new UsuarioBLL().BuscarTodos();
                         break;
                 }
-                
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void dataGridViewUsuario_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void buttonInserir_Click(object sender, EventArgs e)
         {
+            using (FormCadastrarUsuario frm = new FormCadastrarUsuario())
+            {
+                frm.ShowDialog();
+            }
+        }
+        private void buttonAlterar_Click(object sender, EventArgs e)
+        {
+            int id = ((Usuario)bindingSourceUsuario.Current).Id;
 
+            using (FormCadastrarUsuario frm = new FormCadastrarUsuario(id))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void buttonExcluir_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Deseja realmente excluir esse registro?","Atenção", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
+            
+            int id = ((Usuario)bindingSourceUsuario.Current).Id;
+            new UsuarioBLL().Excluir(id);
+            bindingSourceUsuario.RemoveCurrent();
+            MessageBox.Show("REgistro excluido com sucesso!");
         }
 
         private void comboBoxBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,32 +65,10 @@ namespace UIWinFormsApp
 
         }
 
-        private void textBoxBuscarPor_TextChanged(object sender, EventArgs e)
+        private void FormBuscarUsuario_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void bindingSourceUsuario_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonInserir_Click(object sender, EventArgs e)
-        {
-            using (FormCadastrarUsuario frm = new FormCadastrarUsuario())
-            {
-                frm.ShowDialog();
-            }
+            comboBoxBuscarPor.SelectedIndex = 0;
+            buttonBuscar_Click(null, null);
         }
     }
 }

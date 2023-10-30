@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             this.textBoxBuscarPor = new System.Windows.Forms.TextBox();
             this.buttonBuscar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.buttonAlterar = new System.Windows.Forms.Button();
             this.buttonInserir = new System.Windows.Forms.Button();
             this.buttonExcluir = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.buttonSalvar = new System.Windows.Forms.Button();
             this.buttonCancelar = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.dataGridViewUsuario = new System.Windows.Forms.DataGridView();
             this.nomeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeUsuarioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,57 +50,34 @@
             // 
             // textBoxBuscarPor
             // 
-            this.textBoxBuscarPor.Location = new System.Drawing.Point(176, 118);
+            this.textBoxBuscarPor.Location = new System.Drawing.Point(162, 104);
             this.textBoxBuscarPor.Name = "textBoxBuscarPor";
-            this.textBoxBuscarPor.Size = new System.Drawing.Size(416, 27);
+            this.textBoxBuscarPor.Size = new System.Drawing.Size(353, 27);
             this.textBoxBuscarPor.TabIndex = 0;
-            this.textBoxBuscarPor.TextChanged += new System.EventHandler(this.textBoxBuscarPor_TextChanged);
             // 
             // buttonBuscar
             // 
-            this.buttonBuscar.Location = new System.Drawing.Point(601, 93);
+            this.buttonBuscar.Location = new System.Drawing.Point(521, 102);
             this.buttonBuscar.Name = "buttonBuscar";
             this.buttonBuscar.Size = new System.Drawing.Size(94, 29);
             this.buttonBuscar.TabIndex = 1;
             this.buttonBuscar.Text = "&Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
-            this.buttonBuscar.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 93);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Buscar por";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(1049, 61);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Buscar Usuário";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
             // buttonAlterar
             // 
-            this.buttonAlterar.Location = new System.Drawing.Point(701, 93);
+            this.buttonAlterar.Location = new System.Drawing.Point(621, 102);
             this.buttonAlterar.Name = "buttonAlterar";
             this.buttonAlterar.Size = new System.Drawing.Size(94, 29);
             this.buttonAlterar.TabIndex = 1;
             this.buttonAlterar.Text = "&Alterar";
             this.buttonAlterar.UseVisualStyleBackColor = true;
-            this.buttonAlterar.Click += new System.EventHandler(this.button1_Click);
+            this.buttonAlterar.Click += new System.EventHandler(this.buttonAlterar_Click);
             // 
             // buttonInserir
             // 
-            this.buttonInserir.Location = new System.Drawing.Point(801, 93);
+            this.buttonInserir.Location = new System.Drawing.Point(721, 101);
             this.buttonInserir.Name = "buttonInserir";
             this.buttonInserir.Size = new System.Drawing.Size(94, 29);
             this.buttonInserir.TabIndex = 1;
@@ -110,33 +87,52 @@
             // 
             // buttonExcluir
             // 
-            this.buttonExcluir.Location = new System.Drawing.Point(901, 93);
+            this.buttonExcluir.Location = new System.Drawing.Point(821, 101);
             this.buttonExcluir.Name = "buttonExcluir";
             this.buttonExcluir.Size = new System.Drawing.Size(94, 29);
             this.buttonExcluir.TabIndex = 1;
             this.buttonExcluir.Text = "E&xcluir";
             this.buttonExcluir.UseVisualStyleBackColor = true;
-            this.buttonExcluir.Click += new System.EventHandler(this.button1_Click);
+            this.buttonExcluir.Click += new System.EventHandler(this.buttonExcluir_Click);
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(927, 66);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Buscar usuário";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonSalvar
             // 
-            this.buttonSalvar.Location = new System.Drawing.Point(839, 423);
+            this.buttonSalvar.Location = new System.Drawing.Point(721, 409);
             this.buttonSalvar.Name = "buttonSalvar";
             this.buttonSalvar.Size = new System.Drawing.Size(94, 29);
             this.buttonSalvar.TabIndex = 1;
             this.buttonSalvar.Text = "&Salvar";
             this.buttonSalvar.UseVisualStyleBackColor = true;
-            this.buttonSalvar.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonCancelar
             // 
-            this.buttonCancelar.Location = new System.Drawing.Point(943, 423);
+            this.buttonCancelar.Location = new System.Drawing.Point(821, 409);
             this.buttonCancelar.Name = "buttonCancelar";
             this.buttonCancelar.Size = new System.Drawing.Size(94, 29);
             this.buttonCancelar.TabIndex = 1;
             this.buttonCancelar.Text = "&Cancelar";
+            this.buttonCancelar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.buttonCancelar.UseVisualStyleBackColor = true;
-            this.buttonCancelar.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 80);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 20);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Buscar por";
             // 
             // dataGridViewUsuario
             // 
@@ -150,14 +146,13 @@
             this.nomeUsuarioDataGridViewTextBoxColumn,
             this.ativoDataGridViewCheckBoxColumn});
             this.dataGridViewUsuario.DataSource = this.bindingSourceUsuario;
-            this.dataGridViewUsuario.Location = new System.Drawing.Point(18, 151);
+            this.dataGridViewUsuario.Location = new System.Drawing.Point(12, 136);
             this.dataGridViewUsuario.Name = "dataGridViewUsuario";
             this.dataGridViewUsuario.ReadOnly = true;
             this.dataGridViewUsuario.RowHeadersWidth = 51;
             this.dataGridViewUsuario.RowTemplate.Height = 29;
-            this.dataGridViewUsuario.Size = new System.Drawing.Size(977, 266);
-            this.dataGridViewUsuario.TabIndex = 4;
-            this.dataGridViewUsuario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewUsuario_CellContentClick);
+            this.dataGridViewUsuario.Size = new System.Drawing.Size(903, 267);
+            this.dataGridViewUsuario.TabIndex = 3;
             // 
             // nomeDataGridViewTextBoxColumn
             // 
@@ -189,32 +184,33 @@
             // bindingSourceUsuario
             // 
             this.bindingSourceUsuario.DataSource = typeof(Models.Usuario);
-            this.bindingSourceUsuario.CurrentChanged += new System.EventHandler(this.bindingSourceUsuario_CurrentChanged);
             // 
             // comboBoxBuscarPor
             // 
+            this.comboBoxBuscarPor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBuscarPor.FormattingEnabled = true;
             this.comboBoxBuscarPor.Items.AddRange(new object[] {
             "Nome",
-            "Nome de usários",
+            "Nome de usuário",
             "Todos"});
-            this.comboBoxBuscarPor.Location = new System.Drawing.Point(19, 117);
+            this.comboBoxBuscarPor.Location = new System.Drawing.Point(12, 103);
             this.comboBoxBuscarPor.Name = "comboBoxBuscarPor";
-            this.comboBoxBuscarPor.Size = new System.Drawing.Size(151, 28);
-            this.comboBoxBuscarPor.TabIndex = 5;
+            this.comboBoxBuscarPor.Size = new System.Drawing.Size(144, 28);
+            this.comboBoxBuscarPor.TabIndex = 4;
             this.comboBoxBuscarPor.SelectedIndexChanged += new System.EventHandler(this.comboBoxBuscarPor_SelectedIndexChanged);
             // 
             // FormBuscarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 458);
+            this.CancelButton = this.buttonCancelar;
+            this.ClientSize = new System.Drawing.Size(927, 450);
             this.Controls.Add(this.comboBoxBuscarPor);
             this.Controls.Add(this.dataGridViewUsuario);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonSalvar);
             this.Controls.Add(this.buttonCancelar);
+            this.Controls.Add(this.buttonSalvar);
             this.Controls.Add(this.buttonExcluir);
             this.Controls.Add(this.buttonInserir);
             this.Controls.Add(this.buttonAlterar);
@@ -222,6 +218,7 @@
             this.Controls.Add(this.textBoxBuscarPor);
             this.Name = "FormBuscarUsuario";
             this.Text = "FormBuscarUsuario";
+            this.Load += new System.EventHandler(this.FormBuscarUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceUsuario)).EndInit();
             this.ResumeLayout(false);
@@ -233,13 +230,13 @@
 
         private TextBox textBoxBuscarPor;
         private Button buttonBuscar;
-        private Label label1;
-        private Label label2;
         private Button buttonAlterar;
         private Button buttonInserir;
         private Button buttonExcluir;
+        private Label label1;
         private Button buttonSalvar;
         private Button buttonCancelar;
+        private Label label2;
         private DataGridView dataGridViewUsuario;
         private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn nomeUsuarioDataGridViewTextBoxColumn;

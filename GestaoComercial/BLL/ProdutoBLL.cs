@@ -1,8 +1,5 @@
-﻿
-
-using DAL;
+﻿using DAL;
 using Models;
-using System.Security.Cryptography;
 
 namespace BLL
 {
@@ -11,7 +8,8 @@ namespace BLL
         public void Inserir(Produto _produto)
         {
             if (string.IsNullOrEmpty(_produto.Nome))
-                throw new Exception("Informe o nome do Produto");
+                throw new Exception("Informe o nome do produto.");
+
             new ProdutoDAL().Inserir(_produto);
         }
         public void Alterar(Produto _produto)
@@ -30,14 +28,14 @@ namespace BLL
         {
             return new ProdutoDAL().BuscarPorId(_id);
         }
-        public Produto BuscarPorCodBarras(string _CodBarras)
+        public Produto BuscarPorCodigoDeBarras(string _codigoDeBarras)
         {
-            return new ProdutoDAL().BuscarPorCodBarras(_CodBarras);
+            return new ProdutoDAL().BuscarPorCodigoDeBarras(_codigoDeBarras);
         }
-
-        public List<Produto> BuscarPorNomeProduto(string _nome)
+        public List<Produto> BuscarPorNome(string _nome)
         {
-            return new ProdutoDAL().BuscarPorNomeProduto(_nome);
+            return new ProdutoDAL().BuscarPorNome(_nome);
         }
     }
 }
+

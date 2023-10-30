@@ -1,6 +1,4 @@
-﻿
-
-using Models;
+﻿using Models;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
@@ -12,10 +10,10 @@ namespace DAL
         public void Inserir(Usuario _usuario, SqlTransaction _transaction = null)
         {
             SqlTransaction transaction = _transaction;
+
             using (SqlConnection cn = new SqlConnection(Conexao.StringDeConexao))
             {
-                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Usuario(Nome, NomeUsuario, Senha, Ativo)
-                                      VALUES(@Nome, @NomeUsuario, @Senha,@Ativo)"))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Usuario(Nome, NomeUsuario, Senha, Ativo) VALUES(@Nome, @NomeUsuario, @Senha, @Ativo)"))
                 {
                     try
                     {
@@ -44,7 +42,8 @@ namespace DAL
                     {
                         if (transaction.Connection != null && transaction.Connection.State == ConnectionState.Open)
                             transaction.Rollback();
-                        throw new Exception("Ocorreu um erro ao tentar inserir um Usuário no Banco de Dados", ex);
+
+                        throw new Exception("Ocorreu um erro ao tentar inserir o usuário no banco de dados.", ex);
                     }
                 }
             }
@@ -52,219 +51,246 @@ namespace DAL
         public void Alterar(Usuario _usuario, SqlTransaction _transaction = null)
         {
             SqlTransaction transaction = _transaction;
+
             using (SqlConnection cn = new SqlConnection(Conexao.StringDeConexao))
             {
-                try
+                using (SqlCommand cmd = new SqlCommand("UPDATE Usuario SET Nome = @Nome, @NomeUsuario = NomeUsuario, @Senha = Senha, @Ativo = Ativo WHERE Id = @Id"))
                 {
-                    SqlCommand cmd = cn.CreateCommand();
-                    cmd.CommandText = @"UPDATE Usuario 
-                                  SET Nome = @Nome, Senha = @Senha, Ativo = @Ativo 
-                                  WHERE Id = @Id";
+                    try
+                    {
+                        cmd.CommandType = System.Data.CommandType.Text;
 
-                    cmd.CommandType = System.Data.CommandType.Text;
+                        cmd.Parameters.AddWithValue("@Id", _usuario.Id);
+                        cmd.Parameters.AddWithValue("@Nome", _usuario.Nome);
+                        cmd.Parameters.AddWithValue("@NomeUsuario", _usuario.NomeUsuario);
+                        cmd.Parameters.AddWithValue("@Senha", _usuario.Senha);
+                        cmd.Parameters.AddWithValue("@Ativo", _usuario.Ativo);
 
-                    cmd.Parameters.AddWithValue("@Id", _usuario.Id);
-                    cmd.Parameters.AddWithValue("@Nome", _usuario.Nome);
-                    cmd.Parameters.AddWithValue("@NomeUsuario", _usuario.NomeUsuario);
-                    cmd.Parameters.AddWithValue("@Senha", _usuario.Senha);
-                    cmd.Parameters.AddWithValue("@Ativo", _usuario.Ativo);
+                        if (_transaction == null)
+                        {
+                            cn.Open();
+                            transaction = cn.BeginTransaction();
 
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
+                        }
+                        cmd.Transaction = transaction;
+                        cmd.Connection = transaction.Connection;
+
+                        cmd.ExecuteNonQuery();
+
+                        if (_transaction == null)
+                            transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (transaction.Connection != null && transaction.Connection.State == ConnectionState.Open)
+                            transaction.Rollback();
+
+                        throw new Exception("Ocorreu um erro ao tentar atualizar o usuário no banco de dados.", ex);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception("Ocorreu um erro ao tentar inserir um Usuário no Banco de Dados", ex);
-                }
-
             }
-    }
-    public void Excluir(int _id)
-    {
-        SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
-        try
-        {
-            SqlCommand cmd = cn.CreateCommand();
-            cmd.CommandText = @"DELETE FROM Usuario 
-                                  WHERE Id = @Id";
-
-            cmd.CommandType = System.Data.CommandType.Text;
-
-            cmd.Parameters.AddWithValue("@Id", _id);
-
-            cn.Open();
-            cmd.ExecuteNonQuery();
-
         }
-
-        catch (Exception ex)
+        public void Excluir(int _id, SqlTransaction _transaction = null)
         {
+            SqlTransaction transaction = _transaction;
 
-            throw new Exception("Ocorreu um erro ao tentar inserir um Usuário no Banco de Dados", ex);
-        }
-        finally
-        {
-            cn.Close();
-
-        }
-    }
-    public List<Usuario> BuscarTodos()
-    {
-        List<Usuario> usuarioList = new List<Usuario>();
-        Usuario usuario;
-
-        SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
-
-        try
-        {
-            SqlCommand cmd = cn.CreateCommand();
-            cmd.CommandText = @"SELECT Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario";
-
-            cmd.CommandType = System.Data.CommandType.Text;
-
-            cn.Open();
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            using (SqlConnection cn = new SqlConnection(Conexao.StringDeConexao))
             {
-                while (rd.Read())
+                using (SqlCommand cmd = new SqlCommand("DELETE FROM Usuario WHERE Id = @Id"))
                 {
-                    usuario = PreencherObjeto(rd);
-                    usuarioList.Add(usuario);
+                    try
+                    {
+                        cmd.CommandType = System.Data.CommandType.Text;
+
+                        cmd.Parameters.AddWithValue("@Id", _id);
+
+                        if (_transaction == null)
+                        {
+                            cn.Open();
+                            transaction = cn.BeginTransaction();
+                        }
+
+                        cmd.Transaction = transaction;
+                        cmd.Connection = transaction.Connection;
+
+                        cmd.ExecuteNonQuery();
+
+                        if (_transaction == null)
+                            transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (transaction.Connection != null && transaction.Connection.State == ConnectionState.Open)
+                            transaction.Rollback();
+
+                        throw new Exception("Ocorreu um erro ao tentar deletar o usuario no banco de dados.", ex);
+                    }
                 }
             }
-            return usuarioList;
         }
-        catch (Exception ex)
+        public List<Usuario> BuscarTodos()
         {
+            List<Usuario> usuarioList = new List<Usuario>();
+            Usuario usuario;
 
-            throw new Exception("Ocorreu um erro ao tentar Buscar o Usuário no Banco de Dados");
-        }
-        finally
-        {
-            cn.Close();
-        }
-    }
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
-    private static Usuario PreencherObjeto(SqlDataReader _rd)
-    {
-        Usuario usuario = new Usuario();
-        usuario.Id = (int)_rd["Id"];
-        usuario.Nome = _rd["Nome"].ToString();
-        usuario.NomeUsuario = _rd["NomeUsuario"].ToString();
-        usuario.Senha = _rd["Senha"].ToString();
-        usuario.Ativo = Convert.ToBoolean(_rd["Ativo"]);
-        return usuario;
-    }
-
-    public Usuario BuscarPorId(int _id)
-    {
-        Usuario usuario;
-
-        SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
-
-        try
-        {
-            SqlCommand cmd = cn.CreateCommand();
-            cmd.CommandText = @"SELECT FROM Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario WHERE Id = @Id";
-            cmd.CommandType = System.Data.CommandType.Text;
-
-            cmd.Parameters.AddWithValue(@"Id", _id);
-
-            cn.Open();
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            try
             {
-                usuario = new Usuario();
-                if (rd.Read())
+                SqlCommand cmd = cn.CreateCommand();
+
+
+                cmd.CommandText = " SELECT Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario";
+
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cn.Open();
+
+                using (SqlDataReader rd = cmd.ExecuteReader())
                 {
-                    usuario = PreencherObjeto(rd);
+                    while (rd.Read())
+                    {
+                        usuario = PreencherObjeto(rd);
+                        usuarioList.Add(usuario);
+                    }
                 }
+                return usuarioList;
+
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar o usuario no banco de dados.", ex);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+        private static Usuario PreencherObjeto(SqlDataReader rd)
+        {
+            Usuario usuario = new Usuario();
+            usuario.Id = (int)rd["Id"];
+            usuario.Nome = rd["Nome"].ToString();
+            usuario.NomeUsuario = rd["NomeUsuario"].ToString();
+            usuario.Senha = rd["Senha"].ToString();
+            usuario.Ativo = Convert.ToBoolean(rd["Ativo"]);
             return usuario;
         }
-        catch (Exception ex)
+
+        public Usuario BuscarPorId(int _id)
         {
+            Usuario usuario;
 
-            throw new Exception("Ocorreu um erro ao tentar Buscar o Usuário no Banco de Dados");
-        }
-        finally
-        {
-            cn.Close();
-        }
-    }
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
-    public List<Usuario> BuscarPorNome(string _nome)
-    {
-        List<Usuario> usuarioList = new List<Usuario>();
-        Usuario usuario;
-
-        SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
-
-        try
-        {
-            SqlCommand cmd = cn.CreateCommand();
-            cmd.CommandText = @"SELECT Id, Nome, NomeUsuario, Senha, Ativo 
-                                    FROM Usuario 
-                                    WHERE Nome LIKE @Nome";
-
-            cmd.CommandType = System.Data.CommandType.Text;
-            cmd.Parameters.AddWithValue("@Nome", "%" + _nome + "%");
-
-            cn.Open();
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            try
             {
-                while (rd.Read())
+                SqlCommand cmd = cn.CreateCommand();
+
+
+                cmd.CommandText = " SELECT Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario WHERE Id  = @Id";
+
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@Id", _id);
+
+                cn.Open();
+
+                using (SqlDataReader rd = cmd.ExecuteReader())
                 {
-                    usuario = PreencherObjeto(rd);
+                    usuario = new Usuario();
+                    if (rd.Read())
+                    {
+                        usuario = PreencherObjeto(rd);
+                    }
                 }
+                return usuario;
             }
-            return usuarioList;
-        }
-        catch (Exception ex)
-        {
-
-            throw new Exception("Ocorreu um erro ao tentar Buscar o Usuário por nome no Banco de Dados");
-        }
-        finally
-        {
-            cn.Close();
-        }
-    }
-
-    public Usuario BuscarPorNomeUsuario(string _nomeUsuario)
-    {
-        Usuario usuario;
-
-        SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
-
-        try
-        {
-            SqlCommand cmd = cn.CreateCommand();
-            cmd.CommandText = @"SELECT Id, Nome, NomeUsuario, Senha, Ativo 
-                                    FROM Usuario 
-                                    WHERE NomeUsuario = @NomeUsuario";
-            cmd.CommandType = System.Data.CommandType.Text;
-
-            cmd.Parameters.AddWithValue("@NomeUsuario", _nomeUsuario);
-
-            cn.Open();
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            catch (Exception ex)
             {
-                usuario = new Usuario();
-                if (rd.Read())
-                {
-                    usuario = PreencherObjeto(rd);
-                }
+                throw new Exception("Ocorreu um erro ao tentar buscar o usuario no banco de dados.", ex);
             }
-            return usuario;
+            finally
+            {
+                cn.Close();
+            }
         }
-        catch (Exception ex)
+        public List<Usuario> BuscarPorNome(string _nome)
         {
+            List<Usuario> usuarioList = new List<Usuario>();
+            Usuario usuario;
 
-            throw new Exception("Ocorreu um erro ao tentar Buscar o Nome do Usuário no Banco de Dados");
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
+
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+
+
+                cmd.CommandText = " SELECT Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario WHERE Nome LIKE @Nome";
+
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@Nome", "%" + _nome + "%");
+
+                cn.Open();
+
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        usuario = PreencherObjeto(rd);
+                    }
+                }
+                return usuarioList;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar usuario por nome no banco de dados.", ex);
+            }
+            finally
+            {
+                cn.Close();
+            }
         }
-        finally
+        public Usuario BuscarPorNomeUsuario(string _nomeUsuario)
         {
-            cn.Close();
+            Usuario usuario;
+
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
+
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+
+
+                cmd.CommandText = "SELECT Id, Nome, NomeUsuario, Senha, Ativo FROM Usuario WHERE NomeUsuario  = @NomeUsuario";
+
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@NomeUsuario", _nomeUsuario);
+
+                cn.Open();
+
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    usuario = new Usuario();
+                    if (rd.Read())
+                    {
+                        usuario = PreencherObjeto(rd);
+                    }
+                }
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar usuario por nome no banco de dados.", ex);
+            }
+            finally
+            {
+                cn.Close();
+            }
         }
     }
-}
 }

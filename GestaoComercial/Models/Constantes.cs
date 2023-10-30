@@ -1,9 +1,7 @@
-﻿
-
-namespace Models
+﻿namespace Models
 {
     public static class Constantes
     {
-       
+ 
     }
 }

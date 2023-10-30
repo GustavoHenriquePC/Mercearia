@@ -7,12 +7,7 @@ namespace UIWinFormsApp
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void usuárioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (FormBuscarUsuario frm = new FormBuscarUsuario())
             {
@@ -28,7 +23,7 @@ namespace UIWinFormsApp
             }
         }
 
-        private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (FormBuscarCliente frm = new FormBuscarCliente())
             {

@@ -1,16 +1,16 @@
-﻿
+﻿using Models;
 using DAL;
-using Models;
 using System.Security.Cryptography;
 
 namespace BLL
 {
     public class UsuarioBLL
     {
-        public void Inserir (Usuario _usuario)
+        public void Inserir(Usuario _usuario)
         {
-            if (string.IsNullOrEmpty(_usuario.Nome)) ;
-            throw new Exception("Informe o nome do Ususário");
+            if (string.IsNullOrEmpty(_usuario.Nome))
+                throw new Exception("Informe o nome do usuário.");
+
             new UsuarioDAL().Inserir(_usuario);
         }
         public void Alterar(Usuario _usuario)
@@ -29,13 +29,11 @@ namespace BLL
         {
             return new UsuarioDAL().BuscarPorId(_id);
         }
-
         public List<Usuario> BuscarPorNome(string _nome)
         {
             return new UsuarioDAL().BuscarPorNome(_nome);
         }
-
-        public object BuscarPorNomeUsuario(string _nomeUsuario)
+        public Usuario BuscarPorNomeUsuario(string _nomeUsuario)
         {
             return new UsuarioDAL().BuscarPorNomeUsuario(_nomeUsuario);
         }

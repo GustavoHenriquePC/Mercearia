@@ -25,10 +25,10 @@ namespace UIWinFormsApp
                 switch (comboBoxBuscarPor.SelectedIndex)
                 {
                     case 0:
-                        bindingSourceProduto.DataSource = new ProdutoBLL().BuscarPorNomeProduto(textBoxBuscarPor.Text);
+                        bindingSourceProduto.DataSource = new ProdutoBLL().BuscarPorNome(textBoxBuscarPor.Text);
                         break;
                     case 1:
-                        bindingSourceProduto.DataSource = new ProdutoBLL().BuscarPorCodBarras(textBoxBuscarPor.Text);
+                        bindingSourceProduto.DataSource = new ProdutoBLL().BuscarPorCodigoDeBarras(textBoxBuscarPor.Text);
                         break;
                     default:
                         bindingSourceProduto.DataSource = new ProdutoBLL().BuscarTodos();
@@ -37,13 +37,8 @@ namespace UIWinFormsApp
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message);
             }
-        }
-        private void comboBoxBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
